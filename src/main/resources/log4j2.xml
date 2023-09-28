@@ -22,7 +22,6 @@
 
     <Loggers>
         <Root level="debug">
-            <AppenderRef ref="STDOUT"/>
             <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>
