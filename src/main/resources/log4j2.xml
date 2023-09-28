@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Configuration xmlns="http://logging.apache.org/log4j/2.0/config"
-    name="Hippodrome" status="warn">
+<Configuration status="warn" name="Hippodrome">
+    <Properties>
+        <Property name="pattern">%date{yyyy-MM-dd HH:mm:ss,SSS} %level %class: %msg%n</Property>
+    </Properties>
+
     <Appenders>
-        <Console name="STDOUT" target="SYSTEM_OUT">
-            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} %level %class: %msg%n"/>
-        </Console>
+        <RollingFile name="RollingFile"  fileName="logs/hippodrome.log"
+                     filePattern="logs/hippodrome.%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="${pattern}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="logs">
+                    <IfFileName glob="*/hippodrome.*.log"/>
+                    <IfLastModified age="P7D"/>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
+
     <Loggers>
         <Root level="debug">
             <AppenderRef ref="STDOUT"/>
+            <AppenderRef ref="RollingFile"/>
         </Root>
     </Loggers>
 </Configuration>
