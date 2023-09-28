@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Configuration status="warn" name="Hippodrome">
-    <Properties>
-        <Property name="pattern">%date{yyyy-MM-dd HH:mm:ss,SSS} %level %class: %msg%n</Property>
-    </Properties>
-
     <Appenders>
         <RollingFile name="RollingFile"  fileName="logs/hippodrome.log"
                      filePattern="logs/hippodrome.%d{yyyy-MM-dd}.log">
-            <PatternLayout pattern="${pattern}"/>
+            <PatternLayout pattern="%date{yyyy-MM-dd HH:mm:ss,SSS} %level{length=5} %class: %msg%n"/>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
             </Policies>
             <DefaultRolloverStrategy>
                 <Delete basePath="logs">
-                    <IfFileName glob="*/hippodrome.*.log"/>
+                    <IfFileName glob="hippodrome.*.log"/>
                     <IfLastModified age="P7D"/>
                 </Delete>
             </DefaultRolloverStrategy>
